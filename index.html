@@ -209,6 +209,52 @@
                     <section>
                         <img src="img/aspnetpushpromise.png">
                     </section>
+                    <section>
+                        <h4>Push Promise in C# (IIS 10 or Server 2016)</h4>
+                        <pre><code class="csharp hljs">namespace TinyHttp2.Controllers
+{
+    public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            ViewBag.Title = "Home Page";
+            HttpContext.Response.PushPromise("~/Scripts/testscript.js");
+            HttpContext.Response.PushPromise("~/Content/bootstrap.css");
+            HttpContext.Response.PushPromise("~/Content/site.css");
+            HttpContext.Response.PushPromise("~/Scripts/modernizr-2.6.2.js");
+            HttpContext.Response.PushPromise("~/Scripts/jquery-1.10.2.js");
+            HttpContext.Response.PushPromise("~/Scripts/bootstrap.js");
+            HttpContext.Response.PushPromise("~/Scripts/respond.js");
+            return View();
+        }
+    }
+}</code></pre>
+                    </section>
+                    <section>
+                        <h3>Some Fuzzy Perf numbers</h3>
+                        <table>
+                           <thead>
+                               <tr>
+                                   <th>Test</th>
+                                   <th>Time</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr>
+                                   <td>PushPromise default ASP.NET Template HTTP/2</td>
+                                   <td>~100ms</td>
+                               </tr>
+                               <tr>
+                                   <td>No PushPromise default ASP.NET Template HTTP/2</td>
+                                   <td>~240ms</td>
+                               </tr>
+                               <tr>
+                                   <td>default ASP.NET Template HTTP/1.1</td>
+                                   <td>~200ms</td>
+                               </tr>
+                           </tbody>
+                        </table>
+                    </section>
                 </section>
                 <section>
                     <h2>Prioritization</h2>
