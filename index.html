@@ -49,11 +49,25 @@
 						<small>Author by <a href="http://erikonarheim.com">Erik Onarheim</a> / <a href="http://twitter.com/erikonarheim">@erikonarheim</a></small>
 					</p>
 				</section>
+                <section>
+                    <h3>About me</h3>
+                    <hr>
+                    <img class="left image" src="img/avatar.gif">
+                    <div class="left" style="width: 80%">
+                        <p class="fragment">Web Hoster</p>
+                        <p class="fragment">Software Developer</p>                        
+                        <p class="fragment">Video Game Enthusiast</p>
+                        <p class="fragment">excaliburjs.com</p>
+                        <div class="fragment">
+                            <img class="no-border small" src="img/excalibur-title.png">
+                        </div>
+                    </div>
+                </section>
 
 				<section>
 					<h2>So HTTP/2...</h2>
 					<p class="fragment">
-						The long awaited, long predicted, misunderstood beastie of a protocol
+						It has been over 15 years in the making
 					</p>
                     <p class="fragment">
 						What is it?
@@ -63,44 +77,43 @@
 					</p>
 				</section>
                 
-                <section>
-                  <img class="biggest" src="img/neil2.gif">
+                <section data-background="img/neil2.gif">
+                  <!--<img class="biggest" src="img/neil2.gif">-->
 				</section>
                 
                 <section>
                   <h2>HTTP/2 for the modern web</h2>
                   <p class="fragment">
-                      For a long time we had no idea what the web was for...
+                     Performance matters!
                   </p>
                   <p class="fragment">
-                      Tim Burners Lee just thought it would be a cool way to share documents @ CERN
-                  </p>
-                  <p class="fragment">
-                      obvs he was wrong its for cat gifs
-                  </p>
-                  <p class="fragment">
-                      The power web is now a powerful multirequest, multimedia delivery system
+                      HTTP/1.1 Holds back the internet
                   </p>
 				</section>
                 
                 <section>
-                    <h2>HTTP/2</h2>
+                    <h3>HTTP/2</h3>
                     <p>
-                        HTTP/2 is the new version of HyperText Transport Protocol(HTTP), which was released as an IETF standard in early 2015. (scary gov't agency joke IETF)
+                        HTTP/2 is the <strong>new version</strong> of HyperText Transport Protocol(HTTP), <span class="fragment">which was released as an IETF standard in early 2015.</span>  
                     </p>
+                    
+                    
+                    <aside class="notes">
+                        (scary gov't agency joke IETF)
+                    </aside>
                 </section>
                 
                 <section>
                   <h2>What's new in HTTP/2</h2>
                   <ul>
-                        <li class="fragment">Built in connection multiplexing</li>
+                        <li class="fragment">Connection multiplexing</li>
 						<li class="fragment">HPACK header compression</li>						
                         <li class="fragment">Server Push</li>
                         <li class="fragment">Request prioritization</li>
                         <li class="fragment">Binary in transit</li>
 						<li class="fragment">HTTP/2 is SSL only***</li>
                         <li class="fragment">Backwards compatability to HTTP/1.1 with protocol negotiation</li>
-                        <li class="fragment">The HTTP/1.1 verb semantics you know and love are the same</li>
+                        <li class="fragment">The HTTP/1.1 request/response verb semantics you know and love are the same</li>
 					</ul>
 				</section>
                 
@@ -112,47 +125,78 @@
                 </section>
                 
                 <section>
-                    <h2>What does multiplexing get me?</h2>
-                    <ul>
-                        <li class="fragment">Bundling might not be the best idea</li>
-                        <li class="fragment">Inlining/Bundling/Concatenating/Spriting limits the effectiveness of your cache</li>    
-						<li class="fragment">Ahead of line connection blocking is gone</li>						
-                        <li class="fragment">Fewer longer lived connections</li>
-					</ul>
+                    <section>
+                        <h3>Okay what does multiplexing get me?</h3>
+                        <img src="img/http2connection.png">
+                        <ul>
+                            <li class="fragment">Head of line blocking is gone</li>						
+                            <li class="fragment">Fewer longer lived connections</li>
+                            <li class="fragment">Inlining/Bundling/Concatenating/Spriting is bad</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>HTTP/1.1</h3>
+                        <ul>
+                            <li>6 connections per domain, request block each connection</li>
+                            <li>Pay the tcp connection cost for each</li>
+                            <li>Pay the ssl connection cost for each</li>
+                    </section>
+                    <section>
+                        <h3>HTTP/2</h3>
+                            <ul>
+                                <li>1 connection, multiple streams many concurrent requests/responses</li>
+                                <li>Request and responses (messages) don't block tcp connection</li>
+                                <li>Smaller resources are better for caching</li>
+                                <li><a href="https://http2.akamai.com/demo">Demo</a></li>
+                            </ul>
+                    </section>
                 </section>
                 
                 <section>
-                    <h2>Header Compression w/HPACK! Egaaads!</h2>
-                    <p>
-                        Uses a technique called huffman encoding to transform header-value pairs into a compact numeric representation.
-                    </p>
-                    <p>
-                        Awesome if you have a lot of cookies and other information crammed in your header
-                    </p>
-                    <p>
-                        Static table - "known" header field and common values each with its own index number that replace text in transmission
-                    </p>
-                    <p>
-                        Dynamic table - "custom" headers???? need to understand this better
-                    </p>
+                    <section>
+                        <h3>Holy Header Compression Batman (w/HPACK)</h3>
+                        <img class="bigger" src="img/batman2.gif">
+                    </section>
+                    
+                    <section>                    
+                        <img src="img/headers.png">
+                        <ul>                            
+                            <li>Static table - special "known" header fields</li>
+                            <li>Dynamic table - custom headers, cookies, etc</li>
+                            <li>Shared header state</li>
+                            <li>Indexed vs. Literal header (bidirectional)</li>
+                        </ul>
+                        
+                        <aside class="notes">
+                            Uses a technique called huffman encoding to transform header-value pairs into a compact numeric representation.
+                            Awesome if you have a lot of cookies and other information crammed in your header 
+                        </aside>
+                    </section>
                 </section>
                 
                 <section>
                     <h2>Binary transit</h2>
                     <p>
-                        HTTP/1.1 is a text protocol, all message are sent as text over the wire wasting lots of space.
+                        HTTP/1.1 is a <strong>text protocol</strong> 
                     </p>
                     <p>
-                        HTTP/2 uses a binary encoding of the text following    
+                        HTTP/2 is a <strong>binary protocol</strong>
                     </p>
+                    <br/>
                     <p>
                         Telnet can no longer be used for debugging http/2, but Wireshark already supports it!
                     </p>
+                     <aside class="notes">
+                        1. all message are sent as text over the wire wasting lots of space.
+                        2. binary protocols are more compact 
+                    </aside>
                 </section>
                 
                 <section>
-                    <h2>Server Push!!</h2>
-                    <p>
+                    <section>
+                    <h3>Server Push!!</h3>
+                    <img class="tall" src="img/serverpush.png">
+                    <aside class="notes">
                         This allows the server to send you resources it anticipates you'll need like any images, css, or script that before index.html even asks for it.
                         
                         When the browser loads up index.html and sees it needs to load main.js, it is already in the cache! BOOOM! no round trip!
@@ -160,15 +204,16 @@
                         Not only can you push content, you can push redirects!  
                         // put funny gif
                         // explain server push
-                    </p>
+                    </aside>
+                    </section>
+                    <section>
+                        <img src="img/aspnetpushpromise.png">
+                    </section>
                 </section>
                 <section>
                     <h2>Prioritization</h2>
                     <p>
-                        Requests can be prioritized 1 (lowest priority) to 256 (highest priority)
-                    </p>
-                    <p>
-                        Once the client indicates resource priorities the server can build a prioritization tree for the best response
+                        Clients can prioritize requests 1 (lowest priority) to 256 (highest priority)
                     </p>
                 </section>
                 <section>
@@ -194,11 +239,19 @@ Upgrade: h2c
 
 (... HTTP/2 response ...)</code></pre>
                 </section>
+                <section data-background="img/dragons.gif">
+                </section>
                 <section>
-                    <h2>The HTTP/2 Connection</h2>
-                    <li class="fragment">Messages : request/response</li>						
-                    <li class="fragment">Streams : bi-directional channel that carries messages in both directions simultaneously</li>
-                    <li class="fragment">Frames : messages are broken up into frames for transmission, contains a (message|stream) pair id</li>
+                    <section>
+                        <h3>The HTTP/2 Connection</h3>
+                        <img src="img/http2connection2.png">
+                    </section>
+                    <section>
+                        <h3>The HTTP/2 Connection</h3>
+                        <li class="fragment"><strong>Streams</strong> are a bi-directional channel for messages</li>
+                        <li class="fragment"><strong>Messages</strong> requests and responses</li>                    
+                        <li class="fragment"><strong>Frames</strong> build up messages</li>
+                    </section>
                 </section>
                 
                 <section>
@@ -271,353 +324,48 @@ DATA
 + END_STREAM
 {binaryencodedjson}</code></pre>
                 </section>
-                
+                <section data-background="img/hackers3.gif">
+                </section>
                 <section>
                     <h2>Great, can I use this yet</h2>
                     <p>
                         Yes, most clients in the world support this
                     </p>
                     <p class="fragment">
-                        Most browsers are capable of supportting this http://caniuse.com/#feat=http2
+                        http://caniuse.com/#feat=http2
+                        <img src="img/http2support.png">
                     </p>
                 </section>
                 <section>
                     <h2>Hmmm, but what about the server...</h2>
                     <li class="fragment">IIS 10 on Windows 10/Server 2016</li>
                     <li class="fragment">Apache 2.4</li>						
-                    <li class="fragment">NGINX 1.9.5</li>
+                    <li class="fragment">NGINX 1.9.5 (No Server Push Yet)</li>
                     <li class="fragment">Sadly no kestrel until v2... maybe :(</li>
                 </section>
                 <section>
                     <h2>Still not sold, I use a CDN!</h2>
                     <p>
-                        Yes, most clients in the world support this
+                        Most CDNs have or will have this by 2016
                     </p>
-                    <p class="fragment">
-                        Most browsers are capable of supportting this http://caniuse.com/#feat=http2
-                    </p>
+                    <ul>
+                        <li>CloudFlair</li>
+                        <li>Incapsula</li>
+                        <li>KeyCDN</li>
+                        <li>Akamai</li>
+                        <li>EdgeCast (Q3 timeframe)</li>
+                        <li>MaxCDN (2016 sometime)</li>
+                    </ul>
                 </section>
-                
-
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slides.com" target="_blank">http://slides.com</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
-
-				<section>
-					<h2>Touch Optimized</h2>
-					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
-					</p>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
-
-				<section>
-					<section id="fragments">
-						<h2>Fragments</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
-
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's different types of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=slide#/transitions">Slide</a> -
-						<a href="?transition=convex#/transitions">Convex</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						reveal.js comes with a few themes built in: <br>
-						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
-					</p>
-				</section>
-
-				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-						<h2>... and GIFs!</h2>
-					</section>
-				</section>
-
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
-
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Marvelous List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
-				</section>
-
-				<section>
-					<h2>Much more</h2>
-					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
-					</ul>
-				</section>
-
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
-				</section>
+                <section>
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://channel9.msdn.com/Events/Build/2015/3-88">HTTP/2 on Windows 10</a></li>
+                    </ul>
+                </section>
+                <section data-background="img/super.gif">
+                    <h2>End<div class="fragment">?</div></h2>
+                </section>
 
 			</div>
 
