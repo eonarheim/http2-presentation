@@ -112,7 +112,7 @@
                         <li class="fragment">Request prioritization</li>
                         <li class="fragment">Binary in transit</li>
 						<li class="fragment">HTTP/2 is SSL only***</li>
-                        <li class="fragment">Backwards compatability to HTTP/1.1 with protocol negotiation</li>
+                        <li class="fragment">Backwards compatibility to HTTP/1.1 with protocol negotiation</li>
                         <li class="fragment">The HTTP/1.1 request/response verb semantics you know and love are the same</li>
 					</ul>
 				</section>
@@ -163,8 +163,10 @@
                         <ul>                            
                             <li>Static table - special "known" header fields</li>
                             <li>Dynamic table - custom headers, cookies, etc</li>
-                            <li>Shared header state</li>
-                            <li>Indexed vs. Literal header (bidirectional)</li>
+                            <ul>
+                                <li>Shared header state</li>
+                                <li>Indexed vs. Literal header (bidirectional)</li>
+                            </ul>
                         </ul>
                         
                         <aside class="notes">
@@ -229,6 +231,18 @@
         }
     }
 }</code></pre>
+                    </section>
+                    <section>
+                        <h4>Push Promise in Apache</h4>
+                        <pre><code class="apache hljs">&lt;Location /index.html&gt;
+
+        Header add Link "&lt;/css/styles.min.css&gt;;rel=preload"
+
+&lt;/Location&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h4>Push Promise in PHP</h4>
+                        <pre><code class="php hljs">header("Link: &lt;/css/styles.min.css&gt;;rel=preload");</code></pre>
                     </section>
                     <section>
                         <h3>Some Fuzzy Perf numbers</h3>
@@ -338,7 +352,7 @@ Accept: text/html</code></pre>
                     <pre><code class="http hljs">HEADERS
 + END_STREAM
 + END_HEADERS
-   :method = GET
+   :method = get
    :scheme = https
    :path = /index.html
    host = mycoolwebsite.com
@@ -358,7 +372,7 @@ Content-Length: 123
                     <pre><code class="http hljs">HEADERS
 - END_STREAM
 - END_HEADERS
-   :method = POST
+   :method = post
    :scheme = https
    :path = /api/books
 CONTINUATION
@@ -387,6 +401,7 @@ DATA
                     <li class="fragment">IIS 10 on Windows 10/Server 2016</li>
                     <li class="fragment">Apache 2.4</li>						
                     <li class="fragment">NGINX 1.9.5 (No Server Push Yet)</li>
+                    <li class="fragment">Express is working on implementing HTTP/2</li>
                     <li class="fragment">Sadly no kestrel until v2... maybe :(</li>
                 </section>
                 <section>
@@ -395,7 +410,7 @@ DATA
                         Most CDNs have or will have this by 2016
                     </p>
                     <ul>
-                        <li>CloudFlair</li>
+                        <li>CloudFlare</li>
                         <li>Incapsula</li>
                         <li>KeyCDN</li>
                         <li>Akamai</li>
@@ -404,9 +419,20 @@ DATA
                     </ul>
                 </section>
                 <section>
+                    <h3>Debugging tools HTTP/2</h3>
+                    <ul>
+                        <li>h2c</li>
+                        <li>nghttp</li>
+                        <li>Wireshark</li>
+                    </ul>
+                </section>
+                <section>
                     <h3>Resources</h3>
                     <ul>
                         <li><a href="https://channel9.msdn.com/Events/Build/2015/3-88">HTTP/2 on Windows 10</a></li>
+                        <li><a href="https://http2.github.io/http2-spec">HTTP/2 Spec</a></li>
+                        <li><a href="http://chimera.labs.oreilly.com/books/1230000000545/ch12.html">Orielly HTTP/2</a></li>
+                        <li><a href="https://en.wikipedia.org/wiki/HTTP/2">Wikipedia</a></li>
                     </ul>
                 </section>
                 <section data-background="img/super.gif">
